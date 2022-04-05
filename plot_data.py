@@ -31,7 +31,7 @@ cmap_snow, norm_snow = from_levels_and_colors(levels_snow,
                        sns.color_palette(colors_tuple, n_colors=len(levels_snow)),
                  extend='max')
 
-img = m.arcgisimage(service='World_Topo_Map', xpixels=800)
+img = m.arcgisimage(service='Canvas/World_Dark_Gray_Base', xpixels=800)
 #img.set_alpha(0.8)
 m.drawcountries(linewidth=0.6, linestyle='solid', color='black')
 m.readshapefile(home_folder+'/shapefiles/DEU_adm/DEU_adm1', 'DEU_adm1',

@@ -12,7 +12,7 @@ folder_images = "/tmp/"
 dpi_resolution = 100
 
 base_url = 'https://opendata.dwd.de/weather/nwp/snow4/obdn/'
-grid_file = 'https://opendata.dwd.de/weather/nwp/snow4/grid/snow4_grid_germany.dat.zip'
+grid_file = 'https://opendata.dwd.de/weather/nwp/snow4/grid/snow4_grid_germany.dat.bz2'
 
 
 def annotation(ax, text, loc='upper right'):
@@ -55,15 +55,15 @@ def get_snow_data(datetime_now):
         '%Y%m%d') + run, datetime_now.strftime('%y%m%d') + run)
 
     widths = np.full(671, 7, dtype=int).tolist()
-    df = pd.read_fwf(base_url + filename, skiprows=[0, 910, 1820, 2730, 3640, 4550],
+    df = pd.read_fwf(base_url + filename, skiprows=[0, 911, 1822, 2733, 3644, 4555],
                      widths=widths, header=None, lineterminator='\n', na_values=-99.9, compression='zip')
 
     date_end_file = filename[21:29]
     time = pd.date_range(end=datetime.strptime(
         date_end_file, '%y%m%d%H'), freq='1h', periods=6)
 
-    chunks = split(df, 909)
-    snow = np.empty(shape=(0, 909, 671), dtype=float)
+    chunks = split(df, 910)
+    snow = np.empty(shape=(0, 910, 671), dtype=float)
     for c in chunks:
         if c.values.shape[0] != 0:
             snow = np.append(snow, [c.values], axis=0)
@@ -77,17 +77,17 @@ def get_coords(height=False):
     ''' Get longitude and latitude from the coordinate file. If height is set to True then also get
     height values.'''
     coord = pd.read_fwf(grid_file, skiprows=20, header=None,
-                        lineterminator='\n', compression='zip')
-    longitudes = np.array(coord)[0:909, 1:].astype("float")
+                        lineterminator='\n', compression='bz2')
+    longitudes = np.array(coord)[0:910, 1:].astype("float")
 
-    coord = pd.read_fwf(grid_file, skiprows=931, header=None,
-                        lineterminator='\n', compression='zip')
-    latitudes = np.array(coord)[0:909, 1:].astype("float")
+    coord = pd.read_fwf(grid_file, skiprows=932, header=None,
+                        lineterminator='\n', compression='bz2')
+    latitudes = np.array(coord)[0:910, 1:].astype("float")
 
     if height:
-        coord = pd.read_fwf(grid_file, skiprows=1842, header=None,
-                            lineterminator='\n', compression='zip')
-        height = np.array(coord)[0:909, 1:].astype("float")
+        coord = pd.read_fwf(grid_file, skiprows=1844, header=None,
+                            lineterminator='\n', compression='bz2')
+        height = np.array(coord)[0:910, 1:].astype("float")
         height[height == 900] = np.nan
         height[height == -900] = np.nan
         return(longitudes, latitudes, height)

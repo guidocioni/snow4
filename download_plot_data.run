@@ -5,7 +5,7 @@ cd "$(dirname "$0")";
 
 export QT_QPA_PLATFORM=offscreen
 export DISPLAY=localhost:0
-export WORK_FOLDER=/tmp/
+export WORK_FOLDER=/home/ekman/ssd/guido/
 export HOME_FOLDER=$(pwd)
 
 cd ${WORK_FOLDER} || { echo 'Cannot change to DATA folder' ; exit 1; }

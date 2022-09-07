@@ -9,7 +9,7 @@ import os
 import seaborn as sns
 import pandas as pd
 
-home_folder = os.getenv('HOME_FOLDER')
+home_folder = os.getenv('HOME_FOLDER', './')
 
 datetime_now = datetime.datetime.utcnow()
 

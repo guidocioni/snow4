@@ -5,9 +5,10 @@ from matplotlib.offsetbox import AnchoredText
 import matplotlib.colors as colors
 import pandas as pd
 from datetime import datetime
+import os
 
 # Output folder for images
-folder_images = "/tmp/"
+folder_images = os.environ.get('WORK_FOLDER','/home/ekman/ssd/guido/')
 # Resolution of images
 dpi_resolution = 100
 
